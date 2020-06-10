@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 class CompressMod(loader.Module):
     """Compress videos"""  # Translateable due to @loader.tds
     strings = {"name": "ffmpeg support",
-               "no_file": "<code>Provide a file to upload</code>",
+               "no_file": "<code>Provide a video to compress</code>",
                "compressing": "<code>Compressing...</code>"}
 
     @loader.unrestricted  # Security setting to change who can use the command (defaults to owner | sudo)
