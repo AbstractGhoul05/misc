@@ -43,6 +43,7 @@ class CompressMod(loader.Module):
         if message.file:
             msg = message
         else:
+            await utils.answer(message, self.strings("no_file", message))
             return
         doc = getattr(msg, "media", None)
         doc = message.client.iter_download(doc)
