@@ -26,14 +26,9 @@ logger = logging.getLogger(__name__)
 @loader.tds
 class CompressMod(loader.Module):
     """Compress videos"""  # Translateable due to @loader.tds
-    strings = {"mpg_cfg_doc": "Video to compress",
-               "name": "ffmpeg support",
-               "after_sleep": "We have finished sleeping!",
+    strings = {"name": "ffmpeg support",
                "no_file": "<code>Provide a file to upload</code>",
                "compressing": "<code>Compressing...</code>"}
-
-    def __init__(self):
-        self.config = loader.ModuleConfig("VIDEO_URL", "hello", lambda m: self.strings("mpg_cfg_doc", m))
 
     @loader.unrestricted  # Security setting to change who can use the command (defaults to owner | sudo)
     @loader.ratelimit
