@@ -50,4 +50,4 @@ class CompressMod(loader.Module):
         stream = ffmpeg.output(stream, 'out.mp4')
         r = await utils.run_sync(ffmpeg.run, stream)
         logger.debug(r)
-        await utils.answer(message, f'{msg.file.name}.mp4')
+        await utils.answer(message, 'out.mp4')
