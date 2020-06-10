@@ -29,12 +29,14 @@ class CompressMod(loader.Module):
     strings = {"mpg_cfg_doc": "Video to compress",
                "name": "ffmpeg support",
                "after_sleep": "We have finished sleeping!",
-               "no_file": "<code>Provide a file to upload</code>"}
+               "no_file": "<code>Provide a file to upload</code>",
+               "compressing": "<code>Compressing...</code>"}
 
     def __init__(self):
         self.config = loader.ModuleConfig("VIDEO_URL", "hello", lambda m: self.strings("mpg_cfg_doc", m))
 
     @loader.unrestricted  # Security setting to change who can use the command (defaults to owner | sudo)
+    @loader.ratelimit
     async def ffmpegcmd(self, message):
         """Compresses video when you type .ffmpeg"""
         logger.debug("We logged something!")
@@ -45,7 +47,7 @@ class CompressMod(loader.Module):
         doc = getattr(msg, "media", None)
         doc = message.client.iter_download(doc)
         logger.debug("Begin Compression")
-        await utils.answer(message, self.strings("Compressing", message))
+        await utils.answer(message, self.strings("compressing", message))
         stream = ffmpeg.input(msg.file.name)
         stream = ffmpeg.output(stream, 'out.mp4')
         r = await utils.run_sync(ffmpeg.run, stream)
