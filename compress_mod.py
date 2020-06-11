@@ -63,7 +63,7 @@ class CompressMod(loader.Module):
             file = BytesIO()
             await target.download_media(file)
             file.seek(0)
-            stream = await utils.run_sync(ffmpeg.input, file)
+            stream = await utils.run_sync(ffmpeg.input, file.name)
             file.close()
             result = BytesIO()
             result.name = "out.mp4"
