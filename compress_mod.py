@@ -55,6 +55,9 @@ class CompressMod(loader.Module):
         # logger.debug(r)
         # await utils.answer(message, 'out.mp4')
         target = await message.get_reply_message()
+        if target is None:
+          await utils.answer(message, self.strings("no_file", message))
+          return
         try:
             file = BytesIO()
             await target.download_media(file)
@@ -76,4 +79,3 @@ class CompressMod(loader.Module):
                 result.close()
             except UnboundLocalError:
                 pass
-
