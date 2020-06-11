@@ -59,6 +59,7 @@ class CompressMod(loader.Module):
           await utils.answer(message, self.strings("no_file", message))
           return
         try:
+            await utils.answer(message, self.strings("compressing", message))
             file = BytesIO()
             await target.download_media(file)
             file.seek(0)
