@@ -42,11 +42,9 @@ class CompressMod(loader.Module):
           return
         try:
             await utils.answer(message, self.strings("compressing", message))
-            file = BytesIO()
-            path = await target.download_media(file)
-            file.seek(0)
-            stream = await utils.run_sync(ffmpeg.input, path)
-            file.close()
+            filePath = ''
+            await target.download_media(filePath)
+            stream = await utils.run_sync(ffmpeg.input, filePath)
             result = BytesIO()
             result.name = "out.mp4"
             stream = await utils.run_sync(ffmpeg.output, stream, 'out.mp4')
@@ -54,10 +52,6 @@ class CompressMod(loader.Module):
             result.seek(0)
             await utils.answer(message, result)
         finally:
-            try:
-                file.close()
-            except UnboundLocalError:
-                pass
             try:
                 result.close()
             except UnboundLocalError:
