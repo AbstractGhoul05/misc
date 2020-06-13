@@ -36,24 +36,6 @@ class CompressMod(loader.Module):
     async def ffmpegcmd(self, message):
         """Compresses video when you type .ffmpeg"""
         logger.debug("We logged something!")
-        # if message.file:
-        #     msg = message
-        # else:
-        #     msg = (await message.get_reply_message())
-
-        # doc = getattr(msg, "media", None)
-        # if doc is None:
-        #     await utils.answer(message, self.strings("no_file", message))
-        #     return
-      
-        # doc = message.client.iter_download(doc)
-        # logger.debug("Begin Compression")
-        # await utils.answer(message, self.strings("compressing", message))
-        # stream = ffmpeg.input(msg.file.name)
-        # stream = ffmpeg.output(stream, 'out.mp4')
-        # r = await utils.run_sync(ffmpeg.run, stream)
-        # logger.debug(r)
-        # await utils.answer(message, 'out.mp4')
         target = await message.get_reply_message()
         if target is None:
           await utils.answer(message, self.strings("no_file", message))
@@ -61,9 +43,9 @@ class CompressMod(loader.Module):
         try:
             await utils.answer(message, self.strings("compressing", message))
             file = BytesIO()
-            await target.download_media(file)
+            path = await target.download_media(file)
             file.seek(0)
-            stream = await utils.run_sync(ffmpeg.input, file.name)
+            stream = await utils.run_sync(ffmpeg.input, path)
             file.close()
             result = BytesIO()
             result.name = "out.mp4"
