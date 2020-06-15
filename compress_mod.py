@@ -29,7 +29,8 @@ class CompressMod(loader.Module):
     """Compress videos"""  # Translateable due to @loader.tds
     strings = {"name": "ffmpeg support",
                "no_file": "<code>Provide a video to compress</code>",
-               "compressing": "<code>Compressing...</code>"}
+               "compressing": "<code>Compressing...</code>",
+               "error": "<code>Something went wrong!</code>"}
 
     @loader.unrestricted  # Security setting to change who can use the command (defaults to owner | sudo)
     @loader.ratelimit
@@ -48,5 +49,4 @@ class CompressMod(loader.Module):
             await utils.run_sync(ffmpeg.run, stream)
             await utils.answer(message, 'out.mp4')
         except:
-          await utils.answer(message, 'Something Went Wrong!')
-          
+          await utils.answer(message, self.strings("error", message))
