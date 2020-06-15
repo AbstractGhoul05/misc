@@ -48,8 +48,4 @@ class CompressMod(loader.Module):
             await utils.run_sync(ffmpeg.run, stream)
             await utils.answer(message, 'out.mp4')
         finally:
-            # try:
-            #     result.close()
-            # except UnboundLocalError:
-            #     pass
             pass
