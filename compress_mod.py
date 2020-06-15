@@ -44,6 +44,7 @@ class CompressMod(loader.Module):
         await utils.answer(message, self.strings("compressing", message))
         filePath = await target.download_media()
         stream = await utils.run_sync(ffmpeg.input, filePath)
-        stream = await utils.run_sync(ffmpeg.overwrite_output, stream, 'out.mp4')
+        stream = await utils.run_sync(ffmpeg.output, stream, 'out.mp4')
+        stream = await utils.run_sync(ffmpeg.overwrite_output, stream)
         await utils.run_sync(ffmpeg.run, stream)
         await utils.answer(message, 'out.mp4')
