@@ -41,12 +41,9 @@ class CompressMod(loader.Module):
         if target is None:
           await utils.answer(message, self.strings("no_file", message))
           return
-        try:
-            await utils.answer(message, self.strings("compressing", message))
-            filePath = await target.download_media()
-            stream = await utils.run_sync(ffmpeg.input, filePath)
-            stream = await utils.run_sync(ffmpeg.overwrite_output, stream, 'out.mp4')
-            await utils.run_sync(ffmpeg.run, stream)
-            await utils.answer(message, 'out.mp4')
-        except:
-          await utils.answer(message, self.strings("error", message))
+        await utils.answer(message, self.strings("compressing", message))
+        filePath = await target.download_media()
+        stream = await utils.run_sync(ffmpeg.input, filePath)
+        stream = await utils.run_sync(ffmpeg.overwrite_output, stream, 'out.mp4')
+        await utils.run_sync(ffmpeg.run, stream)
+        await utils.answer(message, 'out.mp4')
