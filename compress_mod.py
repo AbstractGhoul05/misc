@@ -47,5 +47,6 @@ class CompressMod(loader.Module):
             stream = await utils.run_sync(ffmpeg.overwrite_output, stream, 'out.mp4')
             await utils.run_sync(ffmpeg.run, stream)
             await utils.answer(message, 'out.mp4')
-        finally:
-            pass
+        except:
+          await utils.answer(message, 'Something Went Wrong!')
+          
